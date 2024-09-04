@@ -47,7 +47,7 @@ public class ItemRepository {
     }
 
     public List<Item> search(String text) {
-        return items.values().stream().filter(item -> item.isAvailable() && item.getName().toLowerCase()
+        return items.values().stream().filter(item -> item.getName().toLowerCase()
                 .contains(text.toLowerCase()) || item.getDescription().toLowerCase().contains(text.toLowerCase())).toList();
     }
 }

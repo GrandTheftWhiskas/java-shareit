@@ -15,4 +15,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
             log.error("Ошибка при вводе значений: {}", e.getMessage());
             return new ErrorResponse(e.getMessage());
         }
+
+        @ExceptionHandler
+        @ResponseStatus(HttpStatus.NOT_FOUND)
+        public ErrorResponse handleNotFound(NotFoundException e) {
+            log.error("Ошибка: {}", e.getMessage());
+            return new ErrorResponse(e.getMessage());
+        }
 }

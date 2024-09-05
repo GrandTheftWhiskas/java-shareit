@@ -44,10 +44,13 @@ public class ItemService {
         return itemRepository.getAll(userId);
     }
 
-    public List<Item> search(String text) {
-        if (text == null || text.isEmpty() || text.isBlank()) {
+    public List<Item> search(Long userId, String text) {
+        if (userRepository.get(userId) == null) {
+            throw new NotFoundException("Пользователь не найден");
+        } else if (text == null || text.isEmpty() || text.isBlank()) {
             return new ArrayList<>();
         }
-        return itemRepository.search(text);
+
+        return itemRepository.search(userId, text);
     }
 }

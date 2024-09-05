@@ -34,8 +34,8 @@ public class ItemController {
     }
 
     @GetMapping("/search")
-    public List<Item> search(@RequestParam String text) {
-        return itemService.search(text);
+    public List<Item> search(@RequestHeader("X-Sharer-User-Id") Long userId, @RequestParam String text) {
+        return itemService.search(userId, text);
     }
 
 }

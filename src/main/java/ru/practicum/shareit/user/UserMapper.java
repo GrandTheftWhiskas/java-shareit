@@ -1,10 +1,20 @@
 package ru.practicum.shareit.user;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import ru.practicum.shareit.exception.NotFoundException;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapper {
     public static UserDto userDto(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setName(userDto.getName());
-        userDto.setEmail(userDto.getEmail());
-        return userDto;
+        try {
+            UserDto userDto = new UserDto();
+            userDto.setId(user.getId());
+            userDto.setName(user.getName());
+            userDto.setEmail(user.getEmail());
+            return userDto;
+        } catch (NullPointerException e) {
+            throw new NotFoundException("Пользователь не найден");
+        }
     }
 }

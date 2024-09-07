@@ -10,7 +10,7 @@ import ru.practicum.shareit.exception.ValidationException;
 class UserService {
     private final UserRepository repository;
 
-    public User post(User user) {
+    public UserDto post(User user) {
         if (user.getEmail() == null) {
             throw new IllegalArgumentException("Email не может быть пустым");
         }
@@ -27,7 +27,7 @@ class UserService {
     }
 
 
-    public User update(Long userId, User user) throws ValidationException {
+    public UserDto update(Long userId, User user) throws ValidationException {
         if (repository.getEmail().contains(user.getEmail())) {
             throw new IllegalArgumentException("Указанный email уже существует");
         }
@@ -36,12 +36,12 @@ class UserService {
     }
 
 
-    public User get(Long userId) {
+    public UserDto get(Long userId) {
         return repository.get(userId);
     }
 
 
-    public User delete(Long userId) {
+    public UserDto delete(Long userId) {
         return repository.delete(userId);
     }
 }

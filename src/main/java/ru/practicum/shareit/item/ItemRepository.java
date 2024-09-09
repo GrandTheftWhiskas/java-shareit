@@ -12,9 +12,8 @@ import java.util.Map;
 @Repository
 public class ItemRepository {
     private long id = 1;
-    private final Map<Long, Item> items = new HashMap<>();
-
-    public ItemDto post(Long userId, Item item) {
+    private final Map<Long, ItemDto> items = new HashMap<>();
+    public ItemDto post(Long userId, ItemDto item) {
         if (item.getId() == null) {
             item.setId(id);
             item.setOwner(userId);
@@ -22,35 +21,36 @@ public class ItemRepository {
         }
 
         items.put(item.getId(), item);
-        return ItemMapper.toItemDto(item);
+        return item;
     }
 
-    public ItemDto update(Long itemId, Item item) {
-        Item savedItem = items.get(itemId);
+    public ItemDto update(Long itemId, ItemDto item) {
+        ItemDto savedItem = items.get(itemId);
         savedItem.setName(item.getName());
         savedItem.setDescription(item.getDescription());
         savedItem.setAvailable(item.getAvailable());
         items.put(savedItem.getId(), savedItem);
-        return ItemMapper.toItemDto(savedItem);
+        return savedItem;
     }
 
     public ItemDto get(Long itemId) {
-        return ItemMapper.toItemDto(items.get(itemId));
+        return items.get(itemId);
     }
 
     public List<ItemDto> getAll(Long userId) {
         List<ItemDto> itemList = new ArrayList<>();
-        for (Item item : items.values()) {
+        for (ItemDto item : items.values()) {
             if (item.getOwner().equals(userId)) {
-                itemList.add(ItemMapper.toItemDto(item));
+                itemList.add(item);
             }
         }
         return itemList;
     }
 
     public List<ItemDto> search(Long userId, String text) {
+        String lowerCaseText = text.toLowerCase();
         return getAll(userId).stream().filter(item -> (item.getName().toLowerCase()
-                .contains(text.toLowerCase()) || item.getDescription().toLowerCase().contains(text.toLowerCase()))
+                .contains(lowerCaseText) || item.getDescription().toLowerCase().contains(lowerCaseText))
                 && item.isAvailable()).toList();
     }
 }

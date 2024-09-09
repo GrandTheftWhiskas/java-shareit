@@ -1,7 +1,10 @@
 package ru.practicum.shareit.user;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import ru.practicum.shareit.exception.ValidationException;
 
 
@@ -10,24 +13,15 @@ import ru.practicum.shareit.exception.ValidationException;
 class UserService {
     private final UserRepository repository;
 
-    public UserDto post(User user) {
-        if (user.getEmail() == null) {
-            throw new IllegalArgumentException("Email не может быть пустым");
-        }
-
+    public UserDto post(UserDto user) {
         if (repository.getEmail().contains(user.getEmail())) {
             throw new IllegalArgumentException("Указанный email уже существует");
         }
-
-        if (!user.getEmail().contains("@")) {
-            throw new IllegalArgumentException("Email должен содержать символ @");
-        }
-
         return repository.post(user);
     }
 
 
-    public UserDto update(Long userId, User user) throws ValidationException {
+    public UserDto update(Long userId, UserDto user) {
         if (repository.getEmail().contains(user.getEmail())) {
             throw new IllegalArgumentException("Указанный email уже существует");
         }

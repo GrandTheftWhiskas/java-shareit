@@ -1,7 +1,9 @@
 package ru.practicum.shareit.item;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
@@ -16,20 +18,14 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
 
-    public ItemDto post(Long userId, Item item) {
+    public ItemDto post(Long userId, ItemDto item) {
         if (userRepository.get(userId) == null) {
             throw new NotFoundException("Пользователь не найден");
-        } else if (item.getAvailable() == null) {
-            throw new IllegalArgumentException("Статус не может быть пустым");
-        } else if (item.getName() == null || item.getName().isBlank()) {
-            throw new IllegalArgumentException("Имя не может быть пустым");
-        } else if (item.getDescription() == null || item.getDescription().isBlank()) {
-            throw new IllegalArgumentException("Описание не может быть пустым");
         }
         return itemRepository.post(userId, item);
     }
 
-    public ItemDto update(Long userId, Long itemId, Item item) {
+    public ItemDto update(Long userId, Long itemId, ItemDto item) {
         if (!itemRepository.get(itemId).getOwner().equals(userId)) {
             throw new NotFoundException("Данный пользователь не является владельцем этого предмета");
         }

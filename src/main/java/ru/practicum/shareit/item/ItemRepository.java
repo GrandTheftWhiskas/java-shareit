@@ -43,7 +43,6 @@ public class ItemRepository {
         if (available != null) {
             savedItem.setAvailable(available);
         }
-        
         return savedItem;
     }
 

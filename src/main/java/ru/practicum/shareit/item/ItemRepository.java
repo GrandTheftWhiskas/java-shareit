@@ -38,11 +38,12 @@ public class ItemRepository {
         if (description != null && !description.isBlank()) {
             savedItem.setDescription(description);
         }
+
         final Boolean available = item.getAvailable();
         if (available != null) {
             savedItem.setAvailable(available);
         }
-        items.put(savedItem.getId(), savedItem);
+        
         return savedItem;
     }
 

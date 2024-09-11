@@ -9,16 +9,9 @@ import ru.practicum.shareit.user.Create;
 public class ItemDto {
     private Long id;
     @NotBlank(groups = Create.class)
-    @NotNull(groups = Create.class)
     private String name;
     @NotBlank(groups = Create.class)
-    @NotNull(groups = Create.class)
     private String description;
     @NotNull(groups = Create.class)
     private Boolean available;
-    private Long owner;
-
-    public boolean isAvailable() {
-        return available;
-    }
 }

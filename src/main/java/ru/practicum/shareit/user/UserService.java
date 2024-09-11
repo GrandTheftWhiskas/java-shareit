@@ -1,5 +1,6 @@
 package ru.practicum.shareit.user;
 
+import java.util.Objects;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,25 +14,27 @@ class UserService {
         if (repository.getEmail().contains(user.getEmail())) {
             throw new IllegalArgumentException("Указанный email уже существует");
         }
-        return repository.post(user);
+
+        return UserMapper.toUserDto(repository.post(user));
     }
 
 
     public UserDto update(Long userId, UserDto user) {
-        if (repository.getEmail().contains(user.getEmail())) {
-            throw new IllegalArgumentException("Указанный email уже существует");
+        if (!Objects.equals(repository.get(userId).getEmail(), user.getEmail())) {
+            if (repository.getEmail().contains(user.getEmail())) {
+                throw new IllegalArgumentException("Указанный email уже существует");
+            }
         }
-
-        return repository.update(userId, user);
+        return UserMapper.toUserDto(repository.update(userId, user));
     }
 
 
     public UserDto get(Long userId) {
-        return repository.get(userId);
+        return UserMapper.toUserDto(repository.get(userId));
     }
 
 
     public UserDto delete(Long userId) {
-        return repository.delete(userId);
+        return UserMapper.toUserDto(repository.delete(userId));
     }
 }

@@ -19,22 +19,22 @@ public class ItemService {
         if (userRepository.get(userId) == null) {
             throw new NotFoundException("Пользователь не найден");
         }
-        return itemRepository.post(userId, item);
+        return ItemMapper.toItemDto(itemRepository.post(userId, item));
     }
 
     public ItemDto update(Long userId, Long itemId, ItemDto item) {
         if (!itemRepository.get(itemId).getOwner().equals(userId)) {
             throw new NotFoundException("Данный пользователь не является владельцем этого предмета");
         }
-        return itemRepository.update(itemId, item);
+        return ItemMapper.toItemDto(itemRepository.update(itemId, item));
     }
 
     public ItemDto get(Long itemId) {
-        return itemRepository.get(itemId);
+        return ItemMapper.toItemDto(itemRepository.get(itemId));
     }
 
     public List<ItemDto> getAll(Long userId) {
-        return itemRepository.getAll(userId);
+        return itemRepository.getAll(userId).stream().map(item -> ItemMapper.toItemDto(item)).toList();
     }
 
     public List<ItemDto> search(Long userId, String text) {
@@ -44,6 +44,6 @@ public class ItemService {
             return new ArrayList<>();
         }
 
-        return itemRepository.search(userId, text);
+        return itemRepository.search(userId, text).stream().map(item -> ItemMapper.toItemDto(item)).toList();
     }
 }

@@ -13,7 +13,6 @@ public class ItemMapper {
         itemDto.setName(item.getName());
         itemDto.setDescription(item.getDescription());
         itemDto.setAvailable(item.getAvailable());
-        itemDto.setOwner(item.getOwner());
         return itemDto;
     }
 }

@@ -3,53 +3,54 @@ package ru.practicum.shareit.user;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 @Slf4j
 public class UserRepository {
     private long id = 1;
-    private final Map<Long, UserDto> users = new HashMap();
-    private List<String> email = new ArrayList<>();
+    private final Map<Long, User> users = new HashMap();
+    private Set<String> email = new HashSet<>();
 
-    public UserDto post(UserDto user) {
+    public User post(UserDto user) {
         log.info("Добавление пользователя");
-        if (user.getId() == null) {
-            user.setId(id);
-            users.put(id, user);
+            User saveUser = new User();
+            saveUser.setId(id);
+            saveUser.setName(user.getName());
+            saveUser.setEmail(user.getEmail());
+            users.put(id, saveUser);
             email.add(user.getEmail());
             id++;
-        } else {
-            users.put(id, user);
-            email.add(user.getEmail());
-        }
-        return user;
+        return saveUser;
     }
 
-    public UserDto update(Long userId, UserDto user) {
+    public User update(Long userId, UserDto user) {
         log.info("Обновление пользователя");
-        UserDto savedUser = users.get(userId);
-        savedUser.setName(user.getName());
-        savedUser.setEmail(user.getEmail());
-        users.put(id, savedUser);
-        email.add(user.getEmail());
+        User savedUser = users.get(userId);
+        final String name = user.getName();
+        if (name != null && !name.isBlank()) {
+            savedUser.setName(name);
+        }
+        email.remove(savedUser.getEmail());
+        final String mail = user.getEmail();
+        if (mail != null && !mail.isBlank()) {
+            savedUser.setEmail(mail);
+        }
+        email.add(savedUser.getEmail());
         return savedUser;
     }
 
-    public UserDto get(Long userId) {
+    public User get(Long userId) {
         log.info("Получение пользователя");
         return users.get(userId);
     }
 
-    public UserDto delete(Long userId) {
+    public User delete(Long userId) {
         return users.remove(userId);
     }
 
     public List<String> getEmail() {
-        return email;
+        return new ArrayList<>(email);
     }
 }
 

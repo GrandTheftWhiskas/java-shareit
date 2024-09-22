@@ -9,32 +9,38 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 class UserService {
     private final UserRepository repository;
+    private final UserDbRepository userDbRepository;
 
-    public UserDto post(UserDto user) {
+    public UserDto post(User user) {
+        System.out.println("Добавление пользователя");
         if (repository.getEmail().contains(user.getEmail())) {
             throw new IllegalArgumentException("Указанный email уже существует");
         }
 
-        return UserMapper.toUserDto(repository.post(user));
+        return UserMapper.toUserDto(userDbRepository.save(user));
     }
 
 
-    public UserDto update(Long userId, UserDto user) {
-        if (!Objects.equals(repository.get(userId).getEmail(), user.getEmail())) {
-            if (repository.getEmail().contains(user.getEmail())) {
+    public UserDto update(Long userId, User user) {
+        System.out.println("Обновление пользователя");
+        if (!Objects.equals(userDbRepository.getUserById(userId).getEmail(), user.getEmail())) {
+            if (userDbRepository.getEmail().contains(user.getEmail())) {
                 throw new IllegalArgumentException("Указанный email уже существует");
             }
         }
-        return UserMapper.toUserDto(repository.update(userId, user));
+        user.setId(userId);
+        return UserMapper.toUserDto(userDbRepository.save(user));
     }
 
 
     public UserDto get(Long userId) {
-        return UserMapper.toUserDto(repository.get(userId));
+        System.out.println("Получение пользователя");
+        return UserMapper.toUserDto(userDbRepository.getUserById(userId));
     }
 
 
-    public UserDto delete(Long userId) {
-        return UserMapper.toUserDto(repository.delete(userId));
+    public void delete(Long userId) {
+        System.out.println("Получение пользователей");
+        userDbRepository.deleteById(userId);
     }
 }

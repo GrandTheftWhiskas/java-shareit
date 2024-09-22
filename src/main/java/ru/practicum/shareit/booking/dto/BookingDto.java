@@ -6,10 +6,8 @@ import java.time.LocalDateTime;
 
 @Data
 public class BookingDto {
-    private Long id;
+    private Long itemId;
     private LocalDateTime start;
     private LocalDateTime end;
-    private Long item;
-    private Long booker;
-    private String status;
+    private State state;
 }

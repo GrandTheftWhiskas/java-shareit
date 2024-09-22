@@ -12,7 +12,7 @@ public class UserRepository {
     private final Map<Long, User> users = new HashMap();
     private Set<String> email = new HashSet<>();
 
-    public User post(UserDto user) {
+    public User post(User user) {
         log.info("Добавление пользователя");
             User saveUser = new User();
             saveUser.setId(id);
@@ -24,7 +24,7 @@ public class UserRepository {
         return saveUser;
     }
 
-    public User update(Long userId, UserDto user) {
+    public User update(Long userId, User user) {
         log.info("Обновление пользователя");
         User savedUser = users.get(userId);
         final String name = user.getName();

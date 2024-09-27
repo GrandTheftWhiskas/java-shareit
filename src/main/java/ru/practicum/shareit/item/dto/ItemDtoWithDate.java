@@ -3,7 +3,7 @@ package ru.practicum.shareit.item.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import ru.practicum.shareit.booking.comment.Comment;
+import ru.practicum.shareit.comment.dto.CommentDto;
 import ru.practicum.shareit.user.Create;
 
 import java.time.LocalDateTime;
@@ -21,5 +21,5 @@ public class ItemDtoWithDate {
     private Long owner;
     private LocalDateTime lastBooking;
     private LocalDateTime nextBooking;
-    private List<Comment> comments;
+    private List<CommentDto> comments;
 }

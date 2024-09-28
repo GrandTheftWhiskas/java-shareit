@@ -1,5 +1,6 @@
 package ru.practicum.shareit.booking.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.booking.dto.BookingDto;
@@ -15,7 +16,7 @@ public class BookingController {
     private static final String HEADER = "X-Sharer-User-Id";
 
     @PostMapping
-    public BookingDto post(@RequestHeader(HEADER) Long userId, @RequestBody BookingDto bookingDto) {
+    public BookingDto post(@RequestHeader(HEADER) Long userId, @Valid @RequestBody BookingDto bookingDto) {
        return bookingService.post(userId, bookingDto);
     }
 
@@ -36,7 +37,7 @@ public class BookingController {
     }
 
     @GetMapping("/owner")
-    List<BookingDto> getAllBookingByOwner(@RequestHeader(HEADER) Long userId) {
+    public List<BookingDto> getAllBookingByOwner(@RequestHeader(HEADER) Long userId) {
         return bookingService.getAllBookingByOwnerId(userId);
     }
 }

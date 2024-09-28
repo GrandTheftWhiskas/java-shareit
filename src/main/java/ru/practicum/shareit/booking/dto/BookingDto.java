@@ -18,6 +18,5 @@ public class BookingDto {
     private LocalDateTime end;
     private Status status;
     private UserDto booker;
-    @NotNull
     private ItemDto item;
 }

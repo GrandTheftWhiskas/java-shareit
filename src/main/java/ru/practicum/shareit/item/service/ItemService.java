@@ -46,6 +46,7 @@ public class ItemService {
             throw new NotFoundException("Пользователь не найден");
         }
         item.setOwner(userId);
+        item.setRequestId(itemDto.getRequestId());
         return ItemMapper.toItemDto(itemDbRepository.save(item));
     }
 

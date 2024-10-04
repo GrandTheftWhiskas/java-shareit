@@ -17,13 +17,13 @@ public class UserController {
 
     @PostMapping
     @Validated(Create.class)
-    public UserDto post(@RequestBody @Validated(Create.class) UserDto user) {
+    public UserDto post(@RequestBody UserDto user) {
         return userService.post(user);
     }
 
     @PatchMapping("/{userId}")
     @Validated(Update.class)
-    public UserDto update(@PathVariable Long userId, @RequestBody @Validated(Update.class) UserDto user) {
+    public UserDto update(@PathVariable Long userId, @RequestBody UserDto user) {
         return userService.update(userId, user);
     }
 

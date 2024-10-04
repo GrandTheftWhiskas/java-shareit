@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,8 @@ public class ItemController {
     }
 
     @PostMapping("/{itemId}/comment")
-    public ResponseEntity<Object> postComment(@RequestHeader(HEADER) Long userId, @RequestBody CommentDto commentDto,
-                               @PathVariable Long itemId) {
+    public ResponseEntity<Object> postComment(@RequestHeader(HEADER) Long userId,
+                                              @Valid @RequestBody CommentDto commentDto, @PathVariable Long itemId) {
         return itemClient.post(userId, commentDto, itemId);
     }
 

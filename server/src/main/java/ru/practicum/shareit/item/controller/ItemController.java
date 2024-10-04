@@ -20,7 +20,7 @@ public class ItemController {
     private static final String HEADER = "X-Sharer-User-Id";
 
     @PostMapping
-    public ItemDto post(@RequestHeader(HEADER) Long userId, @RequestBody @Validated(Create.class) ItemDto item) {
+    public ItemDto post(@RequestHeader(HEADER) Long userId, @RequestBody ItemDto item) {
         return itemService.post(userId, item);
     }
 

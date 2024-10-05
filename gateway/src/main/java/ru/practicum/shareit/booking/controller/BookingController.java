@@ -25,27 +25,32 @@ public class BookingController {
 
 	@PostMapping
 	public ResponseEntity<Object> post(@RequestHeader(HEADER) Long userId, @Valid @RequestBody BookingDto bookingDto) {
+		log.info("Добавление бронирования");
 		return bookingClient.post(userId, bookingDto);
 	}
 
 	@PatchMapping("/{bookingId}")
 	public ResponseEntity<Object> update(@RequestHeader(HEADER) Long userId, @PathVariable Long bookingId,
 										 @RequestParam boolean approved) {
+		log.info("Обновление бронирования");
 		return bookingClient.patch(userId, bookingId, approved);
 	}
 
 	@GetMapping("/{bookingId}")
 	public ResponseEntity<Object> getBooking(@RequestHeader(HEADER) Long userId, @PathVariable Long bookingId) {
+		log.info("Получение бронирования");
 		return bookingClient.get(userId, bookingId);
 	}
 
 	@GetMapping
 	public ResponseEntity<Object> getAllBooking(@RequestHeader(HEADER) Long userId) {
+		log.info("Получение бронирований");
 		return bookingClient.getAll(userId);
 	}
 
 	@GetMapping("/owner")
 	public ResponseEntity<Object> getAllBookingByOwner(@RequestHeader(HEADER) Long userId) {
+		log.info("Получение собственных бронирований");
 		return bookingClient.get(userId);
 	}
 }

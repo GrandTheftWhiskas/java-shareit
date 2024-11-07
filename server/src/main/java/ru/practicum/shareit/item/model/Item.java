@@ -12,13 +12,13 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
-    @Column(name = "description", nullable = false)
+    @Column(name = "description")
     private String description;
-    @Column(name = "available", nullable = false)
+    @Column(name = "available")
     private Boolean available;
-    @Column(name = "owner", nullable = false)
+    @Column(name = "owner")
     private Long owner;
     @Column(name = "request_id")
     private Long requestId;
